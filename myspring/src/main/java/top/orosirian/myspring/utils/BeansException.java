@@ -1,4 +1,4 @@
-package top.orosirian.myspring;
+package top.orosirian.myspring.utils;
 
 public class BeansException extends RuntimeException {
     public BeansException(String msg) {

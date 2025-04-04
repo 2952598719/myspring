@@ -1,4 +1,4 @@
-package top.orosirian.myspring.support;
+package top.orosirian.myspring.support.basic;
 
 import java.util.HashMap;
 import java.util.Map;

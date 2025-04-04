@@ -3,8 +3,8 @@ package top.orosirian.myspring.InstantiationStrategy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.definition.BeanDefinition;
+import top.orosirian.myspring.utils.BeansException;
 
 // 通过反射来创建Bean，大部分情况用这个初始化就好
 public class SimpleInstantiationStrategy implements InstantiationStrategy {

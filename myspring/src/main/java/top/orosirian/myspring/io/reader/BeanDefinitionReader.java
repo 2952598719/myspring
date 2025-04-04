@@ -1,9 +1,9 @@
 package top.orosirian.myspring.io.reader;
 
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.io.resource.Resource;
 import top.orosirian.myspring.io.resource.ResourceLoader;
 import top.orosirian.myspring.support.BeanDefinitionRegistry;
+import top.orosirian.myspring.utils.BeansException;
 
 public interface BeanDefinitionReader {
 

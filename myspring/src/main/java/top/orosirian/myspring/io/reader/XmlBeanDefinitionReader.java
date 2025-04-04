@@ -9,13 +9,13 @@ import org.w3c.dom.NodeList;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.definition.BeanReference;
 import top.orosirian.myspring.definition.PropertyValue;
 import top.orosirian.myspring.io.resource.Resource;
 import top.orosirian.myspring.io.resource.ResourceLoader;
 import top.orosirian.myspring.support.BeanDefinitionRegistry;
+import top.orosirian.myspring.utils.BeansException;
 
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 

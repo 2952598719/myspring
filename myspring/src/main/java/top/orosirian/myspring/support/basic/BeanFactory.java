@@ -1,6 +1,6 @@
-package top.orosirian.myspring.support;
+package top.orosirian.myspring.support.basic;
 
-import top.orosirian.myspring.BeansException;
+import top.orosirian.myspring.utils.BeansException;
 
 // 表示通过name获取Bean的功能
 public interface BeanFactory {

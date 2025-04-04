@@ -2,8 +2,8 @@ package top.orosirian.myspring.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.definition.BeanDefinition;
+import top.orosirian.myspring.utils.BeansException;
 
 public interface InstantiationStrategy {
 

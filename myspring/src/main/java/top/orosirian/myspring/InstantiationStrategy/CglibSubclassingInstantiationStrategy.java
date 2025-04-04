@@ -4,8 +4,8 @@ import java.lang.reflect.Constructor;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.definition.BeanDefinition;
+import top.orosirian.myspring.utils.BeansException;
 
 public class CglibSubclassingInstantiationStrategy implements InstantiationStrategy {
 

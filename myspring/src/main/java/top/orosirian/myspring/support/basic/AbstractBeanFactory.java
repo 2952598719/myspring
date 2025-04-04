@@ -1,7 +1,7 @@
-package top.orosirian.myspring.support;
+package top.orosirian.myspring.support.basic;
 
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.definition.BeanDefinition;
+import top.orosirian.myspring.utils.BeansException;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {

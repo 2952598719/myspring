@@ -1,4 +1,4 @@
-package top.orosirian.myspring.support;
+package top.orosirian.myspring.support.basic;
 
 public interface SingletonBeanRegistry {
     Object getSingleton(String beanName);
