@@ -12,15 +12,29 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <lombok.version>1.18.38</lombok.version>
+        <cglib.version>3.3.0</cglib.version>
+        <hutool.version>5.8.37</hutool.version>
     </properties>
 
     <dependencies>
 
-        <dependency>			<!-- lombok工具 -->
+        <dependency>			<!-- lombok -->
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
 		</dependency>
+
+        <dependency>            <!-- CGLib -->
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+
+        <dependency>            <!-- Hutool -->
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
     </dependencies>
 

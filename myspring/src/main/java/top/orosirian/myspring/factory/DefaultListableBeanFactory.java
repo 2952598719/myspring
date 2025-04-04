@@ -3,10 +3,10 @@ package top.orosirian.myspring.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import top.orosirian.myspring.BeansException;
 import top.orosirian.myspring.factory.support.AbstractAutowireCapableBeanFactory;
-import top.orosirian.myspring.factory.support.BeanDefinition;
 import top.orosirian.myspring.factory.support.BeanDefinitionRegistry;
+import top.orosirian.myspring.factory.use.BeansException;
+import top.orosirian.myspring.factory.use.definition.BeanDefinition;
 
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry {
 
