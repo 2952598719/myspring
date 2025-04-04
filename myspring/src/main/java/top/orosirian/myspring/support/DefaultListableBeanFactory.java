@@ -1,11 +1,11 @@
-package top.orosirian.myspring;
+package top.orosirian.myspring.support;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import top.orosirian.myspring.definition.BeanDefinition;
-import top.orosirian.myspring.support.BeanDefinitionRegistry;
 import top.orosirian.myspring.support.basic.AbstractAutowireCapableBeanFactory;
+import top.orosirian.myspring.support.basic.BeanDefinitionRegistry;
 import top.orosirian.myspring.support.spetialfactory.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
@@ -46,6 +46,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if(beanDefinition == null) throw new BeansException("已定义Bean中无" + beanName);
         return beanDefinition;
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+        beanDefinitionMap.keySet().forEach(this::getBean);
     }
     
 }

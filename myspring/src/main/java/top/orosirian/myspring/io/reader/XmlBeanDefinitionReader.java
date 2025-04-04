@@ -14,7 +14,7 @@ import top.orosirian.myspring.definition.BeanReference;
 import top.orosirian.myspring.definition.PropertyValue;
 import top.orosirian.myspring.io.resource.Resource;
 import top.orosirian.myspring.io.resource.ResourceLoader;
-import top.orosirian.myspring.support.BeanDefinitionRegistry;
+import top.orosirian.myspring.support.basic.BeanDefinitionRegistry;
 import top.orosirian.myspring.utils.BeansException;
 
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
@@ -28,10 +28,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     @Override
-    public void loadBeanDefinitions(String location) throws BeansException {
-        ResourceLoader resourceLoader = getResourceLoader();    // 不用管具体是哪个ResourceLoader加载
-        Resource resource = resourceLoader.getResource(location);
-        loadBeanDefinitions(resource);
+    public void loadBeanDefinitions(String... locations) throws BeansException {
+        for(String location : locations) {
+            loadBeanDefinitions(location);
+        }
     }
 
     @Override
@@ -39,6 +39,13 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         for(Resource resource : resources) {
             loadBeanDefinitions(resource);
         }
+    }
+
+    @Override
+    public void loadBeanDefinitions(String location) throws BeansException {
+        ResourceLoader resourceLoader = getResourceLoader();    // 不用管具体是哪个ResourceLoader加载
+        Resource resource = resourceLoader.getResource(location);
+        loadBeanDefinitions(resource);
     }
 
     @Override

@@ -3,7 +3,7 @@ package top.orosirian.myspring.io.reader;
 import lombok.Getter;
 import top.orosirian.myspring.io.resource.DefaultResourceLoader;
 import top.orosirian.myspring.io.resource.ResourceLoader;
-import top.orosirian.myspring.support.BeanDefinitionRegistry;
+import top.orosirian.myspring.support.basic.BeanDefinitionRegistry;
 
 @Getter
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader {
