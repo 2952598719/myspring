@@ -9,18 +9,24 @@ import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.definition.BeanReference;
 import top.orosirian.myspring.definition.PropertyValue;
 import top.orosirian.myspring.definition.PropertyValues;
+import top.orosirian.myspring.processor.BeanPostProcessor;
+import top.orosirian.myspring.support.spetialfactory.AutowireCapableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
     private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
+    /**
+     * Bean的创建与获取
+     */
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
         Object bean;
         try {
             bean = createBeanInstance(beanName, beanDefinition, args);  // 根据beanDefinition和args得到对应的构造函数，传入args来初始化
             applyPropertyValues(beanName, bean, beanDefinition);        // 填充bean中未被构造器初始化的属性
+            bean = initializeBean(beanName, bean, beanDefinition);      // 执行bean的前置处理、初始化、后置处理
         } catch (Exception e) {
             throw new BeansException("bean的实例化失败", e);
         }
@@ -41,6 +47,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return instantiationStrategy.instantiate(beanName, beanDefinition, constructorToUse, args);
     }
 
+
+    /**
+     * Bean的属性填充
+     */
     protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
@@ -61,4 +71,38 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
     }
     
+
+    /**
+     * 执行bean的前后处理
+     */
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(beanName, bean);
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(beanName, bean);
+        return wrappedBean;
+    }
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {}
+
+    @Override
+    public Object applyBeanPostProcessorsBeforeInitialization(String beanName, Object existingBean) throws BeansException {
+        Object result = existingBean;
+        for(BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessBeforeInitialization(beanName, result);
+            if(current == null) return result;
+            result = current;
+        }
+        return result;
+    }
+
+    @Override
+    public Object applyBeanPostProcessorsAfterInitialization(String beanName, Object existingBean) throws BeansException {
+        Object result = existingBean;
+        for(BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessAfterInitialization(beanName, result);
+            if(current == null) return result;
+            result = current;
+        }
+        return result;
+    }
+
 }

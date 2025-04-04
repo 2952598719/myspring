@@ -1,10 +1,19 @@
 package top.orosirian.myspring.support.basic;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.Getter;
 import top.orosirian.myspring.definition.BeanDefinition;
-import top.orosirian.myspring.utils.BeansException;
+import top.orosirian.myspring.processor.BeanPostProcessor;
+import top.orosirian.myspring.support.spetialfactory.ConfigurableBeanFactory;
+import top.orosirian.myspring.utils.BeansException;;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+@Getter
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     @Override
     public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
@@ -34,5 +43,12 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
+
+    // 如果某个processor存在，则从processors中间移除放到末端
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
     
 }
