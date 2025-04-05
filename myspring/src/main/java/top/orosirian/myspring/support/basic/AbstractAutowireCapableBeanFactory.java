@@ -40,11 +40,16 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             throw new BeansException("bean的实例化失败", e);
         }
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
-        addSingleton(beanName, bean);
+        // 如果是单例才放到singletonObjects里可以二次使用
+        // 如果时是prototype每次获取时发现singletonObjects没有都会重建
+        if(beanDefinition.isSingleton()) {
+            addSingleton(beanName, bean);
+        }
         return bean;
     }
 
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+        if(!beanDefinition.isSingleton()) return;   // 非单例不去放到disposableBeans
         if(bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
             registerDisposableBean(beanName, new DisposableBeanAdapter(beanName, bean, beanDefinition));
         }
