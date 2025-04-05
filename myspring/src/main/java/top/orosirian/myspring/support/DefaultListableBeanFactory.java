@@ -2,6 +2,7 @@ package top.orosirian.myspring.support;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.support.basic.AbstractAutowireCapableBeanFactory;
@@ -11,7 +12,7 @@ import top.orosirian.myspring.utils.BeansException;
 
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {
 
-    private final Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
@@ -50,7 +51,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
     @Override
     public void preInstantiateSingletons() throws BeansException {
-        beanDefinitionMap.keySet().forEach(this::getBean);
+        beanDefinitionMap.keySet().forEach(this::getBean);  // 把beanDefinitionMap的每个键传入getBean函数，来初始化
     }
     
 }

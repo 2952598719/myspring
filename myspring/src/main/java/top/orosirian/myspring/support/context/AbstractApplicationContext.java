@@ -3,8 +3,9 @@ package top.orosirian.myspring.support.context;
 import java.util.Map;
 
 import top.orosirian.myspring.io.resource.DefaultResourceLoader;
-import top.orosirian.myspring.processor.BeanFactoryPostProcessor;
-import top.orosirian.myspring.processor.BeanPostProcessor;
+import top.orosirian.myspring.process.processor.ApplicationContextAwareProcessor;
+import top.orosirian.myspring.process.processor.BeanFactoryPostProcessor;
+import top.orosirian.myspring.process.processor.BeanPostProcessor;
 import top.orosirian.myspring.support.spetialfactory.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
@@ -16,11 +17,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         refreshBeanFactory();
         // 2.获取BeanFactory
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-        // 3.在Bean实例化之前，执行xml中以bean格式定义的BeanFactoryPostProcessor
+        // 3. 自行定义用于感知上下文的BeanPostProcessor，不走createBean流程
+        // 此处的目的是为了让所有BeanFactoryPostProcessor、BeanPostProcessor都能够获取到上下文
+        beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+        // 4.在Bean实例化之前，执行xml中以bean格式定义的BeanFactoryPostProcessor
         invokeBeanFactoryPostProcessors(beanFactory);
-        // 4.注册BeanPostProcessor
+        // 5.注册BeanPostProcessor
         registerBeanPostProcessors(beanFactory);
-        // 5.提前实例化单例的Bean对象
+        // 6.提前实例化单例的Bean对象
         beanFactory.preInstantiateSingletons();
     }
 
@@ -40,6 +44,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         for(BeanPostProcessor beanPostProcessor : beanPostProcessorMap.values()) {
             beanFactory.addBeanPostProcessor(beanPostProcessor);
         }
+    }
+
+    @Override
+    public void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
+    }
+
+    @Override
+    public void close() {
+        getBeanFactory().destroySingletons();
     }
 
     // 下面这些重写都没什么意思。就是这个Context用什么beanFactory从中获取

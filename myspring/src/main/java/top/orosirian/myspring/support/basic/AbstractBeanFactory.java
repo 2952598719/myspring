@@ -5,13 +5,16 @@ import java.util.List;
 
 import lombok.Getter;
 import top.orosirian.myspring.definition.BeanDefinition;
-import top.orosirian.myspring.processor.BeanPostProcessor;
+import top.orosirian.myspring.process.processor.BeanPostProcessor;
 import top.orosirian.myspring.support.spetialfactory.ConfigurableBeanFactory;
-import top.orosirian.myspring.utils.BeansException;;
+import top.orosirian.myspring.utils.BeansException;
+import top.orosirian.myspring.utils.ClassUtils;;
 
 @SuppressWarnings("unchecked")
 @Getter
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 

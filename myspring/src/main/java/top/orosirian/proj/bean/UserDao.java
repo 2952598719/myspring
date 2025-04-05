@@ -8,10 +8,16 @@ public class UserDao {
 
     private static Map<String, String> hashMap = new HashMap<>();
 
-    static {
-        hashMap.put("10001", "特朗普");
-        hashMap.put("10002", "习近平");
-        hashMap.put("10003", "普京");
+    public void initDataMethod(){
+        System.out.println("执行：userDao.init-method");
+        hashMap.put("10001", "小傅哥");
+        hashMap.put("10002", "八杯水");
+        hashMap.put("10003", "阿毛");
+    }
+
+    public void destroyDataMethod(){
+        System.out.println("执行：userDao.destroy-method");     // 而不是实现DisposableBean并重写destroy()
+        hashMap.clear();
     }
 
     public String queryUserName(String uid) {

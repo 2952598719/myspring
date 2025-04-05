@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-    <bean id="userDao" class="top.orosirian.proj.bean.UserDao"/>
 
+    <bean id="userDao" class="top.orosirian.proj.bean.UserDao" init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+    
     <bean id="userService" class="top.orosirian.proj.bean.UserService">
         <property name="uid" value="10002"/>
         <property name="company" value="腾讯"/>
@@ -9,6 +10,4 @@
         <property name="userDao" ref="userDao"/>
     </bean>
     
-    <bean class="top.orosirian.proj.plugin.MyBeanFactoryPostProcessor"/>
-    <bean class="top.orosirian.proj.plugin.MyBeanPostProcessor"/>
 </beans>

@@ -71,6 +71,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             String id = bean.getAttribute("id");
             String name = bean.getAttribute("name");
             String className = bean.getAttribute("class");
+            String initMethod = bean.getAttribute("init-method");
+            String destroyMethod = bean.getAttribute("destroy-method");
+
             // 获取class和beanName
             Class<?> clazz = Class.forName(className);
             String beanName = StrUtil.isEmpty(id) ? name : id;   // isEmpty：null，""
@@ -80,6 +83,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
             // 2.根据获取的class定义和填充bean
             BeanDefinition beanDefinition = new BeanDefinition(clazz);
+            beanDefinition.setInitMethodName(initMethod);
+            beanDefinition.setDestroyMethodName(destroyMethod);
+
             for(int j = 0; j <= bean.getChildNodes().getLength() - 1; j++) {
                 if(!(bean.getChildNodes().item(j) instanceof Element)) continue;
                 if(!bean.getChildNodes().item(j).getNodeName().equals("property")) continue;
@@ -93,7 +99,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanDefinition.getPropertyValues().addPropertyValue(pv);
             }
             if(getRegistry().containsBeanDefinition(beanName)) {
-                throw new BeansException("重复的beanName[" + "]");
+                throw new BeansException("重复的beanName[" + beanName + "]");
             }
             getRegistry().registerBeanDefinition(beanName, beanDefinition);
         }
