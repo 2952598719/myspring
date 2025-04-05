@@ -1,7 +1,7 @@
 package top.orosirian.myspring.definition;
 
 import lombok.Data;
-import top.orosirian.myspring.support.spetialfactory.ConfigurableBeanFactory;
+import top.orosirian.myspring.support.basic.ConfigurableBeanFactory;
 
 @Data
 @SuppressWarnings({"rawtypes"})

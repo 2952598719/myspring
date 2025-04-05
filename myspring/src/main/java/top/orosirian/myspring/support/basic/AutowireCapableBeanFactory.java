@@ -1,6 +1,5 @@
-package top.orosirian.myspring.support.spetialfactory;
+package top.orosirian.myspring.support.basic;
 
-import top.orosirian.myspring.support.basic.BeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public interface AutowireCapableBeanFactory extends BeanFactory {

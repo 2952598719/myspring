@@ -7,8 +7,6 @@ import top.orosirian.myspring.aware.ApplicationContextAware;
 import top.orosirian.myspring.aware.BeanClassLoaderAware;
 import top.orosirian.myspring.aware.BeanFactoryAware;
 import top.orosirian.myspring.aware.BeanNameAware;
-import top.orosirian.myspring.process.bean.DisposableBean;
-import top.orosirian.myspring.process.bean.InitializingBean;
 import top.orosirian.myspring.support.basic.BeanFactory;
 import top.orosirian.myspring.support.context.ApplicationContext;
 import top.orosirian.myspring.utils.BeansException;
@@ -24,7 +22,7 @@ public class UserService implements BeanNameAware, BeanClassLoaderAware, Applica
     private String uid;
     private String company;
     private String location;
-    private UserDao userDao;
+    private IUserDao userDao;
 
     public String queryUserInfo(){
         return userDao.queryUserName(uid) + "," + company + "," + location;

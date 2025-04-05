@@ -1,7 +1,6 @@
-package top.orosirian.myspring.support.spetialfactory;
+package top.orosirian.myspring.support.basic;
 
 import top.orosirian.myspring.process.processor.BeanPostProcessor;
-import top.orosirian.myspring.support.basic.SingletonBeanRegistry;
 
 public interface ConfigurableBeanFactory extends HierachicalBeanFactory, SingletonBeanRegistry {
 

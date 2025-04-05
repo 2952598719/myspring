@@ -4,7 +4,7 @@ import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.definition.PropertyValue;
 import top.orosirian.myspring.definition.PropertyValues;
 import top.orosirian.myspring.process.processor.BeanFactoryPostProcessor;
-import top.orosirian.myspring.support.spetialfactory.ConfigurableListableBeanFactory;
+import top.orosirian.myspring.support.basic.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {

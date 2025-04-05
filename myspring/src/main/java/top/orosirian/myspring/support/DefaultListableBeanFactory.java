@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.support.basic.AbstractAutowireCapableBeanFactory;
 import top.orosirian.myspring.support.basic.BeanDefinitionRegistry;
-import top.orosirian.myspring.support.spetialfactory.ConfigurableListableBeanFactory;
+import top.orosirian.myspring.support.basic.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {

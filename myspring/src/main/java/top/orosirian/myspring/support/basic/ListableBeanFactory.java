@@ -1,8 +1,7 @@
-package top.orosirian.myspring.support.spetialfactory;
+package top.orosirian.myspring.support.basic;
 
 import java.util.Map;
 
-import top.orosirian.myspring.support.basic.BeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public interface ListableBeanFactory extends BeanFactory {

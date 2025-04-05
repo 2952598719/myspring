@@ -6,13 +6,13 @@ import java.util.List;
 import lombok.Getter;
 import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.process.processor.BeanPostProcessor;
-import top.orosirian.myspring.support.spetialfactory.ConfigurableBeanFactory;
+import top.orosirian.myspring.proxy.FactoryBean;
 import top.orosirian.myspring.utils.BeansException;
 import top.orosirian.myspring.utils.ClassUtils;;
 
 @SuppressWarnings("unchecked")
 @Getter
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
@@ -34,13 +34,27 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     }
 
     protected <T> T dogetBean(final String name, final Object[] args) {
-        Object bean = getSingleton(name);
-        if(bean != null) {
-            return (T)bean;
+        Object sharedInstance = getSingleton(name);
+        if(sharedInstance != null) {
+            return (T)getObjectForBeanInstance(name, sharedInstance);
         }
 
         BeanDefinition beanDefinition = getBeanDefinition(name);
-        return (T)createBean(name, beanDefinition, args);
+        Object bean = createBean(name, beanDefinition, args);
+        return (T) getObjectForBeanInstance(name, bean);
+    }
+
+    private Object getObjectForBeanInstance(String beanName, Object beanInstance) {
+        if(!(beanInstance instanceof FactoryBean)) {
+            return beanInstance;
+        }
+
+        Object object = getCachedObjectForFactoryBean(beanName);
+        if(object == null) {
+            FactoryBean<?> factoryBean = (FactoryBean<?>) beanInstance;
+            object = getObjectFromFactoryBean(beanName, factoryBean);
+        }
+        return object;
     }
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;

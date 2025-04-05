@@ -6,7 +6,7 @@ import top.orosirian.myspring.io.resource.DefaultResourceLoader;
 import top.orosirian.myspring.process.processor.ApplicationContextAwareProcessor;
 import top.orosirian.myspring.process.processor.BeanFactoryPostProcessor;
 import top.orosirian.myspring.process.processor.BeanPostProcessor;
-import top.orosirian.myspring.support.spetialfactory.ConfigurableListableBeanFactory;
+import top.orosirian.myspring.support.basic.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {

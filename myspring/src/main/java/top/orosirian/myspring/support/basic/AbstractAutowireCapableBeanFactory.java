@@ -19,7 +19,6 @@ import top.orosirian.myspring.process.bean.DisposableBean;
 import top.orosirian.myspring.process.bean.DisposableBeanAdapter;
 import top.orosirian.myspring.process.bean.InitializingBean;
 import top.orosirian.myspring.process.processor.BeanPostProcessor;
-import top.orosirian.myspring.support.spetialfactory.AutowireCapableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {

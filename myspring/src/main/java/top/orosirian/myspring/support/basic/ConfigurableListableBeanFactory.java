@@ -1,4 +1,4 @@
-package top.orosirian.myspring.support.spetialfactory;
+package top.orosirian.myspring.support.basic;
 
 import top.orosirian.myspring.definition.BeanDefinition;
 import top.orosirian.myspring.utils.BeansException;
