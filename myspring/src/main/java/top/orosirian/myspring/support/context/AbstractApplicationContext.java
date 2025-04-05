@@ -1,7 +1,14 @@
 package top.orosirian.myspring.support.context;
 
+import java.util.Collection;
 import java.util.Map;
 
+import top.orosirian.myspring.event.ApplicationEvent;
+import top.orosirian.myspring.event.ApplicationEventMulticaster;
+import top.orosirian.myspring.event.ApplicationListener;
+import top.orosirian.myspring.event.ContextClosedEvent;
+import top.orosirian.myspring.event.ContextRefreshedEvent;
+import top.orosirian.myspring.event.SimpleApplicationEventMulticaster;
 import top.orosirian.myspring.io.resource.DefaultResourceLoader;
 import top.orosirian.myspring.process.processor.ApplicationContextAwareProcessor;
 import top.orosirian.myspring.process.processor.BeanFactoryPostProcessor;
@@ -10,6 +17,10 @@ import top.orosirian.myspring.support.basic.ConfigurableListableBeanFactory;
 import top.orosirian.myspring.utils.BeansException;
 
 public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {
+
+    public static final String APPLICATION_EVENT_MULTICASTER_BEAN_NAME = "applicationEventMulticaster";
+
+    private ApplicationEventMulticaster applicationEventMulticaster;
 
     @Override
     public void refresh() throws BeansException {
@@ -24,8 +35,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         invokeBeanFactoryPostProcessors(beanFactory);
         // 5.注册BeanPostProcessor
         registerBeanPostProcessors(beanFactory);
-        // 6.提前实例化单例的Bean对象
+        // 6.初始化事件发布者
+        initApplicationEventMulticaster();
+        // 7.注册事件监听器();
+        registerListeners();
+        // 8.提前实例化单例的Bean对象
         beanFactory.preInstantiateSingletons();
+        // 9.发布容器刷新完成事件
+        finishRefresh();
     }
 
     protected abstract void refreshBeanFactory() throws BeansException;     // 留待子类实现
@@ -53,7 +70,33 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
     @Override
     public void close() {
+        // 发布容器关闭event
+        publishEvent(new ContextClosedEvent(this));
+        // 销毁单例bean
         getBeanFactory().destroySingletons();
+    }
+
+    private void initApplicationEventMulticaster() {
+        ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+        applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);
+        beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, applicationEventMulticaster);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private void registerListeners() {
+        Collection<ApplicationListener> applicationListeners = getBeansOfType(ApplicationListener.class).values();
+        for(ApplicationListener listener : applicationListeners) {
+            applicationEventMulticaster.addApplicationListener(listener);
+        }
+    }
+
+    private void finishRefresh() {
+        publishEvent(new ContextRefreshedEvent(this));
+    }
+
+    @Override
+    public void publishEvent(ApplicationEvent event) {
+        applicationEventMulticaster.multicastEvent(event);
     }
 
     // 下面这些重写都没什么意思。就是这个Context用什么beanFactory从中获取

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
     
-    <bean id="userService" class="top.orosirian.proj.bean.UserService">
-        <property name="uid" value="10002"/>
-        <property name="company" value="腾讯"/>
-        <property name="location" value="深圳"/>
-        <property name="userDao" ref="proxyUserDao"/>
-    </bean>
+    <bean class="top.orosirian.proj.event.CustomEventListener"/>
 
-    <bean id="proxyUserDao" class="top.orosirian.proj.bean.ProxyBeanFactory"/>
-    
+    <bean class="top.orosirian.proj.event.ContextRefreshedEventListener"/>
+
+    <bean class="top.orosirian.proj.event.ContextClosedEventListener"/>
+
 </beans>

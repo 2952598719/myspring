@@ -9,5 +9,7 @@ public interface ConfigurableBeanFactory extends HierachicalBeanFactory, Singlet
     String SCOPE_PROTOTYPE = "prototype";
 
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
+
+    void destroySingletons();
     
 }
